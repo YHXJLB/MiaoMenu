@@ -2,9 +2,10 @@ name: Java CI
 
 on:
   push:
-    branches: [main, master, dev]
+    branches: [main, master, dev, 26.2]
   pull_request:
     branches: [main, master]
+  workflow_dispatch:
 
 permissions:
   contents: read
