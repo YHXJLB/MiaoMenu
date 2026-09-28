@@ -45,10 +45,9 @@ jobs:
           body: |
             ## 更新内容
             
-            - MiaoMenu 3.1 用反射调用 Floodgate `sendForm`。原 `findSendFormMethod` 仅按「方法名 + 2 参 + 首参 UUID」取第一个匹配。
-            - Floodgate 2.2.6+ 新增 `sendForm(UUID, FormBuilder)` 等重载并排到前面，导致误选错误重载、传入已 build 的 Form 对象，触发 `IllegalArgumentException: argument type mismatch`。
-            - 本补丁改为用 `Class.forName("org.geysermc.cumulus.form.Form")` 精确匹配第二个参数为 Cumulus 1.x `Form` 接口的重载，与重载声明顺序无关，因此同时兼容 Floodgate 2.2.5 与 2.2.6+。
-            - 已在服务器实机测试通过。
+            - 适配 Floodgate 2.2.6：修复基岩版玩家打开菜单时报 `IllegalArgumentException: argument type mismatch`、表单无法送达的问题
+            - 重写 Floodgate 反射逻辑：改为通过 Cumulus `Form` 接口精确匹配 `sendForm` 重载，不再依赖方法声明顺序，同时兼容 Floodgate 2.2.5 与 2.2.6+
+            - 已在服务器实机测试通过
             
             > 参考：Yamada0001/MiaoMenu#12
       - name: Remove original asset from release
