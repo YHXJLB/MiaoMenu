@@ -38,7 +38,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || format('ci-{0}', github.sha) }}
-          name: MiaoMenu 3.1 用反射调用 Floodgate sendForm，原 findSendFormMethod 仅按“方法名+2参+首参UUID”取第一个匹配。Floodgate 2.2.6+ 新增 sendForm(UUID, FormBuilder) 等重载并排到前面，导致误选错误重载、传入已 build 的 Form 对象触发 IllegalArgumentException: argument type mismatch。本补丁改为用 Class.forName("org.geysermc.cumulus.form.Form") 精确匹配第二个参数为 Cumulus 1.x Form 接口的重载，与重载声明顺序无关，因此同时兼容 Floodgate 2.2.5 与 2.2.6+。
+          name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'MiaoMenu 3.1 用反射调用 Floodgate sendForm，原 findSendFormMethod 仅按“方法名+2参+首参UUID”取第一个匹配。Floodgate 2.2.6+ 新增 sendForm(UUID, FormBuilder) 等重载并排到前面，导致误选错误重载、传入已 build 的 Form 对象触发 IllegalArgumentException: argument type mismatch。本补丁改为用 Class.forName("org.geysermc.cumulus.form.Form") 精确匹配第二个参数为 Cumulus 1.x Form 接口的重载，与重载声明顺序无关，因此同时兼容 Floodgate 2.2.5 与 2.2.6+。' }}
           prerelease: false
           files: target/*.jar
           body: |
