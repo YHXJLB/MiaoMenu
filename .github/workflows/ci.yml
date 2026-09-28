@@ -28,8 +28,10 @@ jobs:
       - name: Read version & drop original jar
         id: meta
         run: |
-          VER=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | grep -E '^[0-9]' | head -1)
-          VER=${VER#V}
+          JAR=$(ls target/MiaoMenu-*.jar | head -1)
+          RAW=$(basename "$JAR" .jar)
+          RAW=${RAW#MiaoMenu-}
+          VER=${RAW#V}
           echo "version=$VER" >> "$GITHUB_OUTPUT"
           rm -f target/original-*.jar
       - name: Publish to Release
